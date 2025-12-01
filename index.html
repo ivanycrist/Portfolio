@@ -817,32 +817,197 @@
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
     }
+
+    /* --------- Mobile first tweaks (iPhone / Android) --------- */
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid rgba(75, 85, 99, 0.9);
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  font-size: 1rem;
+  color: #e5e7eb;
+  cursor: pointer;
+}
+
+/* Pantallas pequeñas (teléfonos) */
+@media (max-width: 767px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .navbar-inner {
+    padding: 0.7rem 1rem;
+  }
+
+  /* Mostrar hamburguesa y ocultar menú horizontal por defecto */
+  .nav-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 56px;
+    left: 1rem;
+    right: 1rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.8rem 1rem 1rem;
+    background: rgba(15, 23, 42, 0.98);
+    border-radius: 16px;
+    border: 1px solid rgba(31, 41, 55, 0.95);
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+    font-size: 0.85rem;
+    display: none; /* cerrado por defecto */
+    z-index: 40;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
+
+  .nav-links a {
+    width: 100%;
+    padding: 0.35rem 0;
+  }
+
+  .nav-cta {
+    display: none; /* en mobile quitamos el botón extra del nav */
+  }
+
+  /* Hero más compacto en mobile */
+  .hero {
+    padding: 2.5rem 0 2.2rem;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+    line-height: 1.15;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9rem;
+    max-width: 100%;
+  }
+
+  .hero-tags {
+    gap: 0.4rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* Secciones más legibles en mobile */
+  section {
+    padding: 2.1rem 0;
+  }
+
+  .section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .section-title {
+    font-size: 0.98rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.85rem;
+    max-width: 100%;
+  }
+
+  /* Tarjetas a ancho completo */
+  .card {
+    padding: 1rem 1rem;
+  }
+
+  /* Grids a una columna donde haga falta (ya casi todo lo está, pero reforzamos) */
+  .skills-grid,
+  .experience-grid,
+  .projects-grid,
+  .testimonials-grid,
+  .contact-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.2rem;
+  }
+
+  .projects-grid {
+    gap: 1rem;
+  }
+
+  .project-card {
+    padding: 0.9rem 0.9rem;
+  }
+
+  .hero-card {
+    margin-top: 0.5rem;
+  }
+
+  /* Footer centrado en mobile */
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+}
+
+/* Teléfonos muy pequeños (por si acaso) */
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 1.6rem;
+  }
+
+  .tag,
+  .chip,
+  .badge {
+    font-size: 0.7rem;
+  }
+}
+
   </style>
 </head>
 <body>
   <div class="page">
     <!-- Navbar -->
-    <header class="navbar">
-      <div class="container navbar-inner">
-        <div class="brand">
-          <div class="brand-avatar" aria-hidden="true"></div>
-          <div class="brand-text">
-            <span class="brand-name">Ivan Cristancho</span>
-            <span class="brand-role">Customer Support & QA Analyst</span>
-          </div>
-        </div>
-        <nav class="nav-links">
-          <a href="#about">About</a>
-          <a href="#skills">Skills</a>
-          <a href="#experience">Experience</a>
-          <a href="#projects">Projects</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <a class="nav-cta" href="#contact">
-          <span>Let's work together</span> →
-        </a>
+<header class="navbar">
+  <div class="container navbar-inner">
+    <div class="brand">
+      <div class="brand-avatar" aria-hidden="true"></div>
+      <div class="brand-text">
+        <span class="brand-name">Ivan Cristancho</span>
+        <span class="brand-role">Customer Support & QA Analyst</span>
       </div>
-    </header>
+    </div>
+
+    <!-- Botón hamburguesa para mobile -->
+    <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+      ☰
+    </button>
+
+    <nav class="nav-links" id="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <a class="nav-cta" href="#contact">
+      <span>Let's work together</span> →
+    </a>
+  </div>
+</header>
+
 
     <main>
       <!-- Hero -->
@@ -1227,9 +1392,27 @@
     </footer>
   </div>
 
-  <script>
-    // Dynamic year in the footer
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+<script>
+  // Dynamic year in the footer
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Toggle menú mobile
+  const navToggle = document.getElementById("nav-toggle");
+  const navLinks = document.getElementById("nav-links");
+
+  navToggle.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
+  });
+
+  // Cerrar menú al hacer click en un link
+  navLinks.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      navLinks.classList.remove("open");
+    });
+  });
+</script>
+
+
 </body>
 </html>
+
